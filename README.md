@@ -1,16 +1,13 @@
 # Marginalia
 
-> 把论文放左边，把 Claude Code 放右边。让阅读和推理变成一个流畅的回路。
-> Read papers on the left, run Claude Code on the right.
-> Turn reading and reasoning into one fluid loop.
+> 把论文放左边，把 Claude Code 放右边。
+> 让阅读和推理变成一个流畅的回路。
 
-[**⬇ Download v0.2.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel
+[**⬇ 下载 v0.2.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
 
 ---
 
-## 🇨🇳 中文
-
-### 简介
+## 简介
 
 **Marginalia** 是一款 macOS 桌面应用——左边读 PDF 论文，右边嵌入了真·Claude Code 终端。
 你在 PDF 上划选的文字、论文全文、每篇论文的 Claude 对话历史，会自动注入到 Claude 的上下文里。
@@ -18,25 +15,27 @@
 
 名字来自学术传统中**写在书页边缘的批注**（marginalia）——我们把这件事自动化、规模化，然后接进 AI 对话。
 
-### 截图
+---
 
-#### 文献库 — 集中管理所有论文
-![Library](screenshots/01-library.png)
+## 截图
 
-- 按文件夹组织（V2A、video、…）
+### 文献库 — 集中管理所有论文
+![文献库](screenshots/01-library.png)
+
+- 按文件夹组织（V2A、video、…），可嵌套展开
 - 一键导入：本地 PDF / arXiv ID / PDF URL / BibTeX 批量粘贴
 - MinerU 解析状态实时显示
 - 右键论文：归档 / 重命名 / 删除
 
-#### 发现 — HuggingFace 每日 Trending
+### 发现 — HuggingFace 每日 Trending
 ![Trending](screenshots/02-trending.png)
 
 - 每日刷新 HuggingFace 推荐的 50 篇热门论文
 - 自动展示 AI 关键词、上投票数、关联 GitHub
 - 一键 `+ Add to library`，PDF 自动从 arXiv 下载
 
-#### 阅读 — PDF + Claude Code 并排
-![Reader](screenshots/03-reader.png)
+### 阅读 — PDF + Claude Code 并排
+![阅读视图](screenshots/03-reader.png)
 
 - 左边连续滚动 PDF，支持双指捏合缩放、文字选区高亮持久化
 - 右边嵌入真正的 Claude Code（不是 API 套壳）
@@ -44,7 +43,9 @@
 - **Preview 面板**：渲染 markdown + KaTeX 公式（终端里看不到的，这里能看）
 - `+ 新会话` / `历史` 按钮管理每篇论文的多个 Claude 对话
 
-### 功能清单
+---
+
+## 功能清单
 
 - ✅ **三栏阅读器**：文件夹侧栏 · PDF 查看器 · Claude Code 终端
 - ✅ **文献库**：SQLite 后端，支持文件夹、归档、最近阅读、临时预览（点搜索结果不入库）
@@ -63,24 +64,28 @@
 - ✅ **导出 / 导入文献库**：一键打包成 zip（含 PDF、MinerU 结果、Claude jsonl），换机器或备份用
 - ✅ **设置面板**：填 MinerU / Semantic Scholar API key、重新提取所有论文标题、备份恢复
 
-### 系统要求
+---
+
+## 系统要求
 
 - **macOS**（Apple Silicon 或 Intel 都可）
 - **Claude Code CLI** 已装并在 `PATH`：参见 [docs.claude.com/claude-code](https://docs.claude.com/claude-code)
 - （可选）MinerU API key — 注册 [mineru.net](https://mineru.net/) 拿
 - （可选）Semantic Scholar API key — 申请 [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api#api-key-form)
 
-### 安装方式
+---
 
-#### 1. 下载
+## 安装方式
+
+### 1. 下载
 
 到 [Releases](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) 下载 **`Marginalia_<version>_universal.dmg`**。
 
-#### 2. 安装
+### 2. 安装
 
 打开 dmg → 把 **Marginalia.app** 拖到 **应用程序** 文件夹。
 
-#### 3. 首次启动（绕过 Gatekeeper）
+### 3. 首次启动（绕过 Gatekeeper）
 
 应用**未做 Apple 代码签名**（还没买 Apple Developer 账号），所以首次双击会弹：
 > *"Marginalia" 无法打开，因为 Apple 无法检查它是否包含恶意软件*
@@ -97,14 +102,16 @@ xattr -dr com.apple.quarantine /Applications/Marginalia.app
 ```
 然后正常双击。
 
-#### 4. 配置
+### 4. 配置
 
 启动后右上角 ⚙ 打开设置 →
 - （推荐）粘贴 MinerU API key + 勾"导入论文时自动用 MinerU 解析"
 - （推荐）粘贴 Semantic Scholar API key（避开匿名限流）
 - 关闭设置 → 可以用了
 
-### 一些"暗坑"提醒
+---
+
+## 一些"暗坑"提醒
 
 - **数据存在 `~/.alphaxiv++/`**（历史遗留名，下个大版本迁移到 `~/.marginalia/`）—— 想备份就备份这个目录，或在设置里点"导出文献库"
 - **Claude 会话**存在 `~/.claude/projects/<encoded-cwd>/*.jsonl`，由 Claude Code 自己管，跟应用同步走
@@ -112,97 +119,13 @@ xattr -dr com.apple.quarantine /Applications/Marginalia.app
 
 ---
 
-## 🇬🇧 English
+## 校验下载
 
-### Overview
-
-**Marginalia** is a macOS desktop application: PDF on the left, **embedded Claude Code** on the right. Your text selections, the paper's full content, and per-paper conversation history are automatically injected into Claude's context. No copying, no window switching, no re-explaining your context.
-
-The name nods to the scholarly tradition of writing notes **in the margins of a book** — we automate, scale, and route those notes into a live AI conversation.
-
-### Screenshots
-
-#### Library
-![Library](screenshots/01-library.png)
-
-Folder-organized library · multi-source import · live MinerU parse status · right-click actions.
-
-#### Discovery — HuggingFace Trending
-![Trending](screenshots/02-trending.png)
-
-Daily-refreshed HuggingFace top 50 · AI-extracted keywords · one-click add (PDF auto-downloaded from arXiv).
-
-#### Reader — PDF + Claude Code
-![Reader](screenshots/03-reader.png)
-
-Continuous-scroll PDF with pinch-zoom · persistent selection highlight · the **real** Claude Code on the right (not an API wrapper) · markdown + KaTeX preview pane for formula rendering · per-paper session history.
-
-### Features
-
-- ✅ **Three-pane reader**: folder sidebar · PDF viewer · Claude Code terminal
-- ✅ **Library**: SQLite-backed with folders, archived/tentative state, recent view
-- ✅ **Paper sources**:
-  - Local PDF upload
-  - arXiv ID / URL
-  - Any PDF URL
-  - **BibTeX paste** (bulk, background-imports, deduped by arxiv_id, files into any folder)
-  - Semantic Scholar / arXiv search
-  - 🤗 HuggingFace Daily Trending
-- ✅ **PDF viewer**: continuous scroll · pinch-to-zoom (WebKit gestures) · page virtualization (100-page papers don't blow up memory) · **persistent text-selection highlight** (CSS Custom Highlight API — stays visible after you click Claude)
-- ✅ **Per-paper Claude sessions**: `claude -c` to continue · `+ New` for a fresh session · `History ▾` to resume any past conversation with full transcript
-- ✅ **Markdown + KaTeX preview pane**: renders formulas in-place, instead of you reading `$$\sum$$` literally
-- ✅ **MinerU integration** (optional, opt-in): cloud-parses PDFs into structured markdown with LaTeX formulas + extracted figures, runs in background
-- ✅ **Selection → Claude auto-injection**: highlight on PDF → file write → `UserPromptSubmit` hook injects it into the next prompt, no copy-paste
-- ✅ **Library export / import**: one-button .zip backup including PDFs, MinerU output, and Claude jsonl session files
-- ✅ **Settings dialog**: API keys (MinerU + Semantic Scholar), bulk title re-extraction, backup/restore
-
-### Requirements
-
-- **macOS** (Apple Silicon or Intel)
-- **Claude Code CLI** installed and on `PATH` — see [docs.claude.com/claude-code](https://docs.claude.com/claude-code)
-- (optional) MinerU API key — sign up at [mineru.net](https://mineru.net/)
-- (optional) Semantic Scholar API key — apply at [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api#api-key-form)
-
-### Install
-
-#### 1. Download
-
-Get **`Marginalia_<version>_universal.dmg`** from [Releases](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest).
-
-#### 2. Install
-
-Open the dmg → drag **Marginalia.app** into the **Applications** folder.
-
-#### 3. First launch (Gatekeeper bypass)
-
-The build is **not Apple-code-signed** (no Apple Developer account yet), so on first launch macOS will say:
-
-> *"Marginalia" can't be opened because Apple cannot check it for malicious software.*
-
-**Option A — Right-click open (one-time)**
-1. Open the **Applications** folder
-2. **Right-click** (or Ctrl-click) `Marginalia` → choose **Open**
-3. The dialog changes to one with an **Open** button → click **Open**
-4. Double-clicking works normally from now on.
-
-**Option B — Terminal**
 ```bash
-xattr -dr com.apple.quarantine /Applications/Marginalia.app
+shasum -a 256 Marginalia_0.2.0_universal.dmg
+# 期望值：
+# 774c276b618ab343124193bea0fee8d4a50e60f298d8e700c741df1aca292221
 ```
-Then double-click as normal.
-
-#### 4. Configure
-
-Launch the app → click ⚙ at top-right →
-- (recommended) Paste your MinerU API key + tick "Enable MinerU auto-parse on import"
-- (recommended) Paste your Semantic Scholar API key (avoids anonymous rate limits)
-- Close settings — you're set.
-
-### Notes
-
-- **Library data** lives at `~/.alphaxiv++/` (legacy path; will migrate to `~/.marginalia/` in v1.0). To back up, copy that directory or use Settings → Backup → Export Library.
-- **Claude conversation history** lives at `~/.claude/projects/<encoded-cwd>/*.jsonl`, managed by Claude Code itself — moves with the app.
-- **First MinerU parse** runs 30 s – a few minutes per paper in background, non-blocking; progress toasts appear in the bottom-right.
 
 ---
 
@@ -210,4 +133,6 @@ Launch the app → click ⚙ at top-right →
 
 MIT.
 
-Source code is in a separate private repo. This repo only hosts release binaries and install instructions.
+源代码在独立的私有 repo。本 repo 只托管构建产物 + 安装指南。
+
+[English README →](README_EN.md)
