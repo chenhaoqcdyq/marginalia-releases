@@ -3,7 +3,38 @@
 > Read papers on the left, run Claude Code on the right.
 > Turn reading and reasoning into one fluid loop.
 
-[**⬇ Download v0.2.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [中文 README](README.md)
+[**⬇ Download v0.3.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [中文 README](README.md)
+
+---
+
+## 🆕 News — v0.3.0 (2026-05-21)
+
+Major release: HF Daily panel redesign, broader search backends, smart
+caching, instant paper opens.
+[Full release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.3.0)
+
+- 🤗 **HF Daily panel redesign**: Daily / Weekly / Monthly range tabs,
+  Top / Hot / Newest sort, date browser, submitter avatars, discussion
+  deep-links, thumbnail lightbox, expandable abstracts, click-to-filter
+  keyword chips, optional HuggingFace token.
+- ⚡ **Per-day cache shared across ranges + background prefetch**: after
+  one Monthly fetch, switching to Weekly / Daily is free; today's data
+  is silently refreshed every 10 min.
+- 🔎 **OpenAlex** as a third search backend (no API key, 100k req/day/IP).
+  Now the default.
+- ⚡ **Optimistic open-reader**: clicking a Trending paper opens the
+  reader immediately with a "downloading…" placeholder; PDF + DB insert
+  run in the background.
+- 🔄 **State persistence**: Library / Search / Trending tabs each remember
+  scroll, query, filter, range. Sidebar nav rows auto-switch to My Library.
+- ⚙ **Settings panel redesign**: bubble cards, network diagnostics as a
+  2-col card grid with status dots / latency / expandable errors, manual
+  proxy override live-applied.
+- 🖼 **PDF sharpness setting** (default 2× = Retina native, matches macOS
+  Preview); Modern/Legacy worker toggle for older Intel Mac Safari.
+- 🆕 **New app icon**: cream squircle + crimson margin mark.
+- 🔔 **In-app update check**: silent daily check against GitHub Releases
+  with ETag caching and 6h backoff on rate-limit.
 
 ---
 
@@ -25,12 +56,20 @@ The name nods to the scholarly tradition of writing notes **in the margins of a 
 - Live MinerU parse status per row
 - Right-click for archive / rename / delete
 
-### Discovery — HuggingFace Daily Trending
+### Discovery — HuggingFace Daily Papers
 ![Trending](screenshots/02-trending.png)
 
-- Daily-refreshed top 50 papers from HuggingFace
-- AI-extracted keywords, upvote counts, linked GitHub repos
-- One-click `+ Add to library`, PDF auto-downloaded from arXiv
+- **Daily / Weekly / Monthly** range tabs, **Top / Hot / Newest** sort
+- ◀ ▶ date browser for any past day's papers
+- Submitter avatars (click → HF profile), 💬 discussion deep-links,
+  click-to-zoom thumbnail lightbox, click-to-filter keyword chips
+- **Per-day cache shared across ranges**: after a Monthly fetch, switching
+  to Weekly / Daily is free. Background prefetch refreshes today every
+  10 min while the panel is mounted.
+- One-click `+ Add to library` or **click the title to open the reader**
+  instantly (PDF downloads in the background, no blank wait)
+- Optional **HuggingFace token** in Settings to enter HF's polite pool
+  and dodge the Monthly rate-limit risk
 
 ### Reader — PDF + Claude Code side by side
 ![Reader](screenshots/03-reader.png)
@@ -52,15 +91,22 @@ The name nods to the scholarly tradition of writing notes **in the margins of a 
   - arXiv ID / URL
   - Any PDF URL
   - **BibTeX paste** (bulk, background-imports, deduped by arxiv_id, files into any folder)
-  - Semantic Scholar (primary) / arXiv (fallback) search
-  - 🤗 HuggingFace Daily Trending
+  - **OpenAlex (default, no key, 100k req/day/IP)** / Semantic Scholar /
+    arXiv search; per-query result cache so switching tabs is instant
+  - 🤗 HuggingFace Daily Papers (Daily / Weekly / Monthly + multiple sorts)
 - ✅ **PDF viewer**: continuous scroll · pinch-to-zoom (WebKit gestures) · page virtualization (100-page papers don't blow up memory) · **persistent text-selection highlight** (CSS Custom Highlight API — stays visible after you click Claude)
 - ✅ **Per-paper Claude sessions**: `claude -c` to continue · `+ New` for a fresh session · `History ▾` to resume any past conversation with full transcript
 - ✅ **Markdown + KaTeX preview pane**: renders formulas in-place, instead of you reading `$$\sum$$` literally
 - ✅ **MinerU integration** (optional, opt-in): cloud-parses PDFs into structured markdown with LaTeX formulas + extracted figures, runs in background
 - ✅ **Selection → Claude auto-injection**: highlight on PDF → file write → `UserPromptSubmit` hook injects it into the next prompt, no copy-paste
 - ✅ **Library export / import**: one-button .zip backup including PDFs, MinerU output, and Claude jsonl session files
-- ✅ **Settings dialog**: API keys (MinerU + Semantic Scholar), bulk title re-extraction, backup/restore
+- ✅ **Settings dialog**: API keys (MinerU / Semantic Scholar / HuggingFace),
+  Claude pane theme (6 presets), PDF render sharpness, PDF render mode
+  (modern / legacy compat), manual proxy override, network diagnostics
+  (card grid with status dots), backup/restore
+- ✅ **In-app update check**: silent daily check against GitHub Releases,
+  header badge when newer; manual "Check now" in Settings; ETag-cached
+  to avoid GitHub rate limits
 
 ---
 
@@ -121,9 +167,9 @@ Launch the app → click ⚙ at top-right →
 ## Verify download
 
 ```bash
-shasum -a 256 Marginalia_0.2.0_universal.dmg
+shasum -a 256 Marginalia_0.3.0_universal.dmg
 # expected:
-# 774c276b618ab343124193bea0fee8d4a50e60f298d8e700c741df1aca292221
+# 609098343cae29470a8c665b498fa522c799c2219e0fde03dc585f437a04b6a4
 ```
 
 ---

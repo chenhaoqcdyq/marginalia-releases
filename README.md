@@ -3,7 +3,33 @@
 > 把论文放左边，把 Claude Code 放右边。
 > 让阅读和推理变成一个流畅的回路。
 
-[**⬇ 下载 v0.2.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
+[**⬇ 下载 v0.3.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
+
+---
+
+## 🆕 News — v0.3.0（2026-05-21）
+
+最新大版本带来 HF Daily 体验重做、搜索源扩展、智能缓存和论文打开零等待。
+[完整 release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.3.0)
+
+- 🤗 **HF Daily 全新面板**：Daily / Weekly / Monthly 范围切换、Top / Hot /
+  Newest 排序、日期 ◀▶ 翻历史、提交人头像、💬 加入讨论、缩略图点击放大、
+  摘要展开、关键词点击过滤。设置里可填可选的 HuggingFace token。
+- ⚡ **按天共享缓存 + 后台预取**：跑完 Monthly 后，切到 Weekly / Daily 0 网络
+  请求。HF 面板挂载时每 10 分钟静默刷新 today。
+- 🔎 **OpenAlex 加入搜索（默认）**：2.5 亿篇论文，无 key，100k 次 / 天 / IP，
+  比 arXiv / Semantic Scholar 都宽松。
+- ⚡ **点击 trending 论文 0 等待**：reader 立即出现 + 占位"下载中"，PDF
+  和数据库写入在后台跑。
+- 🔄 **状态全记住**：Library / Search / Trending 三个标签页各自记滚动位置、
+  上次搜索/筛选状态；侧栏 All / Inbox / 文件夹点击自动切回 My Library。
+- ⚙ **设置面板重设计**：气泡式卡片，网络诊断 2 列卡片网格（绿/红状态点 +
+  延迟徽章 + 可展开报错），手动代理设置即时生效。
+- 🖼 **PDF 渲染清晰度可调**（默认 2× = Retina 原生，匹配 macOS 预览）；
+  Intel Mac 老 Safari 用兼容模式切到 PDF.js legacy worker。
+- 🆕 **新图标**：米黄 squircle + 红色 margin mark。
+- 🔔 **应用内更新检查**：启动自动检测新版本，header 右上跳红色徽章；
+  ETag 缓存避开 GitHub 限流。
 
 ---
 
@@ -27,12 +53,18 @@
 - MinerU 解析状态实时显示
 - 右键论文：归档 / 重命名 / 删除
 
-### 发现 — HuggingFace 每日 Trending
+### 发现 — HuggingFace Daily Papers
 ![Trending](screenshots/02-trending.png)
 
-- 每日刷新 HuggingFace 推荐的 50 篇热门论文
-- 自动展示 AI 关键词、上投票数、关联 GitHub
-- 一键 `+ Add to library`，PDF 自动从 arXiv 下载
+- **Daily / Weekly / Monthly** 范围切换，**Top / Hot / Newest** 排序
+- ◀ ▶ 翻看任意一天的 daily papers
+- 提交人头像（点跳 HF 主页）、💬 加入讨论按钮（深链到 paper 评论页）、
+  缩略图点击放大 lightbox、AI 关键词点击过滤
+- **按天共享缓存**：跑完 Monthly 切到 Weekly / Daily 0 网络请求；后台
+  每 10 分钟静默刷新 today
+- 一键 `+ Add to library` 或 **点 title 直接进 reader**（PDF 后台下载，
+  界面不卡）
+- 设置里可填可选的 **HuggingFace token** 进 polite pool 避开 Monthly 限流
 
 ### 阅读 — PDF + Claude Code 并排
 ![阅读视图](screenshots/03-reader.png)
@@ -54,15 +86,20 @@
   - arXiv ID / URL 一键导入
   - 任意 PDF URL 下载
   - **BibTeX 批量粘贴**（后台导入，自动按 arxiv_id 去重，归类到任意文件夹）
-  - Semantic Scholar 搜索（推荐）/ arXiv 搜索（备选）
-  - 🤗 HuggingFace 每日 Trending
+  - **OpenAlex（默认，无 key，100k 次/天/IP）** / Semantic Scholar / arXiv
+    三选一搜索，结果按 query 缓存切换标签页秒出
+  - 🤗 HuggingFace Daily Papers（Daily / Weekly / Monthly + 多种排序）
 - ✅ **PDF 查看器**：连续滚动 · 双指捏合缩放（WebKit 手势）· 页面虚拟化（开 100 页论文不爆内存）· 文字选区**持久高亮**（点别处也不消失）
 - ✅ **每论文独立 Claude 会话**：`claude -c` 自动续上次对话，`+ 新会话` 开新，`历史 ▾` 恢复任意历史会话并看完整 transcript
 - ✅ **Markdown + KaTeX preview pane**：Claude 回复的公式实时渲染，不再是 `$$\sum$$` 字面字符
 - ✅ **MinerU 集成**（可选）：云端解析 PDF 为结构化 markdown（LaTeX 公式 + 真表格 + 抽取图表），后台跑不阻塞
 - ✅ **选区 → Claude 自动注入**：PDF 上划选 → `current_selection.md` 写文件 → UserPromptSubmit hook 注入到下条 prompt → Claude 自然知道你在问哪段
 - ✅ **导出 / 导入文献库**：一键打包成 zip（含 PDF、MinerU 结果、Claude jsonl），换机器或备份用
-- ✅ **设置面板**：填 MinerU / Semantic Scholar API key、重新提取所有论文标题、备份恢复
+- ✅ **设置面板**：MinerU / Semantic Scholar / HuggingFace API key、Claude 终端
+  主题（6 个预设）、PDF 渲染清晰度、PDF 渲染模式（现代/兼容）、手动代理设置、
+  网络诊断（卡片网格 + 状态点）、备份恢复
+- ✅ **应用内更新检查**：启动自动检测新版本，header 红色徽章 + Settings 里
+  "立即检查"按钮，ETag 缓存避开 GitHub 限流
 
 ---
 
@@ -122,9 +159,9 @@ xattr -dr com.apple.quarantine /Applications/Marginalia.app
 ## 校验下载
 
 ```bash
-shasum -a 256 Marginalia_0.2.0_universal.dmg
+shasum -a 256 Marginalia_0.3.0_universal.dmg
 # 期望值：
-# 774c276b618ab343124193bea0fee8d4a50e60f298d8e700c741df1aca292221
+# 609098343cae29470a8c665b498fa522c799c2219e0fde03dc585f437a04b6a4
 ```
 
 ---
