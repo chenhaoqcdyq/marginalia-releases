@@ -3,7 +3,62 @@
 > 把论文放左边，把 Claude Code 放右边。
 > 让阅读和推理变成一个流畅的回路。
 
-[**⬇ 下载 v0.3.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
+[**⬇ 下载 v0.5.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
+
+---
+
+## 🆕 News — v0.5.0（2026-05-24）
+
+PDF 内**引用卡片**+ 对话 **Preview 重设计**。点 `[N]` 就地浮出论文卡片
+（标题、参考文献全文、首页缩略图、Jump、Bookmark、应用内打开）；点
+`Figure 3` / `Table 2` 直接跳图体，自带"← 返回上一位置" pill。
+[完整 release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.5.0)
+
+- 🎯 **点 [N] 浮出卡片**：不再跳走、不再丢上下文。卡片随 PDF 滚动/
+  缩放跟随，ESC 或点外部消失。
+- 🧠 **智能识别 Figure / Table / Section / Algorithm / Theorem**：
+  非参考文献的跨页链接直接跳目标（且自动上移 ~320pt 让图体进入视口，
+  而不是只看到 caption），并在右上角浮一个 ← Back to page N pill。
+- 🖼 **卡片左侧首页缩略图**：本地库命中秒出，未命中走 arXiv 下载（流式
+  进度条），结果磁盘缓存。
+- ➡ **红色 → 按钮：应用内打开**这篇引用论文（已在库 → 聚焦旧窗口；
+  不在库 → 下载 + 入库 + 开新 reader 窗口）。Loading overlay 带真实
+  进度条和取消按钮，10MB 下载也不会把你卡死。
+- 🔖 **卡片内 Bookmark**：选已有文件夹或现场新建一个，原子化入库 + 关联
+  文件夹。
+- 📚 **引用解析**：MinerU 的 paper.md 被解析成有编号的参考文献表；卡片
+  通过目标位置文本反查 `[N]` 条目（避开了源文本 `[9, 10, 11]` 簇的
+  误判）。
+- 💬 **Preview 重设计**：用户问题改成右对齐玫红色聊天气泡 `Q1 / Q2`
+  编号，与 markdown assistant 回答有明显视觉区分；导航按钮换成
+  `« ‹ › »` 图标，`‹ Prev Q` 智能两段式（先回到当前问题开头，已在
+  开头则跳上一问题）；自动过滤 `<system-reminder>` / tool_result /
+  hook 注入的"伪用户消息"。
+- 🛠 **PDFView 生命周期修复**：返回文献库现在原子从视图树移除 PDFView
+  （之前某些合成路径下会残留上一篇论文的页面），再次打开论文时
+  pending frame 也会重新应用。
+- ⚙ **Tauri 多 webview 适配**：所有可能在卡片浮层出现后被主 reader 调
+  到的命令统一换成 `tauri::Webview` 参数（`WebviewWindow` 在多 webview
+  窗口上会报 "current webview is not a WebviewWindow"）。
+
+---
+
+## 🆕 News — v0.4.0（2026-05-22）
+
+macOS 原生 **PDFKit 渲染器**成为默认，附带完整标注层。
+[完整 release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.4.0)
+
+- 🖥 **PDFKit 默认开启**：丝滑捏合 / 滚动、原生选区、内存更低、各缩放
+  级别都清晰；PDF.js 作为跨平台后备。
+- 🖍 **标注**：选区 → 7 色调色板 → 可选笔记 → Highlight，存到
+  `~/.alphaxiv++/papers/<id>/annotations.json`，下次打开真·PDFAnnotation
+  重绘。点击已有 highlight 加载回 ribbon 编辑/删除，⌘↵ 保存。
+- 🎈 **Hover marginalia 气泡**：鼠标停留 highlight 时在 PDF 列右侧弹出
+  小气泡显示页码、选区预览、笔记。
+- 💡 **Ask AI 按钮**：标注 ribbon 上一键把选区 + 笔记写入
+  `current_selection.md`，让下一条 Claude prompt 自动带上下文。
+- 🧰 修复：PDFView 不再遮 React header（contentLayoutRect Y 翻转 bug）；
+  objc2 0.6 NSString 转换 panic；"返回文献库"后点同篇论文重新进 reader。
 
 ---
 
@@ -159,9 +214,8 @@ xattr -dr com.apple.quarantine /Applications/Marginalia.app
 ## 校验下载
 
 ```bash
-shasum -a 256 Marginalia_0.3.0_universal.dmg
-# 期望值：
-# 609098343cae29470a8c665b498fa522c799c2219e0fde03dc585f437a04b6a4
+shasum -a 256 Marginalia_0.5.0_universal.dmg
+# 期望值：8b8b440888c07c8a30ff28b4cbe1535536a4984efe0d989593e4ebd8f468751a
 ```
 
 ---

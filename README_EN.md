@@ -3,7 +3,83 @@
 > Read papers on the left, run Claude Code on the right.
 > Turn reading and reasoning into one fluid loop.
 
-[**⬇ Download v0.3.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [中文 README](README.md)
+[**⬇ Download v0.5.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [中文 README](README.md)
+
+---
+
+## 🆕 News — v0.5.0 (2026-05-24)
+
+In-PDF **citation cards** + a redesigned **chat preview**. Click `[N]`
+and a paper card pops over the spot — title, reference text, first-page
+thumbnail, Jump, Bookmark, Open-in-Marginalia. Click `Figure 3` /
+`Table 2` and you skip straight to the figure body with a "← Back to
+page N" pill.
+[Full release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.5.0)
+
+- 🎯 **Citation cards on click**: PDF stops jumping away. Card follows
+  the PDF as you scroll / zoom, dismisses on `Esc` or click-outside.
+- 🧠 **Smart Fig / Table / Section / Algorithm / Theorem detection**:
+  non-citation links bypass the card and do a direct jump to the
+  figure / table BODY (auto-shifted up so the actual content is in
+  view, not just the caption), with a floating "← Back to page N" pill.
+- 🖼 **First-page thumbnail in the card**: instant when the cited paper
+  is in your library; otherwise streaming download from arXiv with a
+  real progress bar; cached to disk.
+- ➡ **Red → button: open in Marginalia** — finds the cited paper in
+  your library or downloads + imports it, then opens it in a new
+  reader window. Loading overlay with a real progress bar and a
+  cancel button so a 10 MB download doesn't lock you in.
+- 🔖 **Bookmark from the card**: pick existing folders or create one
+  inline. Atomically imports the paper if needed and writes the
+  folder assignments.
+- 📚 **Reference parsing**: MinerU's `paper.md` is parsed into a
+  numbered reference list. `[N]` resolves against destination text
+  (sidesteps the `[9, 10, 11]` cluster ambiguity that source-side
+  parsing used to get wrong).
+- 💬 **Chat preview redesign**: user turns render as right-aligned
+  rose chat bubbles with Q1/Q2 numbering, visually distinct from
+  the assistant's markdown replies. Header nav switches to icon-only
+  `« ‹ › »` buttons; `‹ Prev Q` is two-stage (snaps to the top of
+  the current question first if mid-scroll, then steps back on a
+  second tap). System-injected `<system-reminder>` / tool_result /
+  hook messages are filtered out so only what you actually typed
+  shows.
+- 🛠 **PDFView lifecycle fixes**: back-to-library now atomically
+  removes the PDFView from the view tree (some compositor states
+  used to leak the previous paper's pages onto the library UI);
+  re-opening flushes pending frames so PDFView reappears on first try.
+- ⚙ **Multi-webview Tauri plumbing**: every `pdfkit_*` command that
+  the main reader hits after the citation card overlay is added now
+  uses `tauri::Webview` instead of `WebviewWindow` (the latter
+  rejects the parent webview with "current webview is not a
+  WebviewWindow" once `add_child` makes the window a multi-webview
+  composite).
+
+---
+
+## 🆕 News — v0.4.0 (2026-05-22)
+
+Native macOS **PDFKit renderer** by default, with a full annotation
+layer on top.
+[Full release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.4.0)
+
+- 🖥 **PDFKit renderer default on macOS**: native pinch / scroll /
+  selection, lower memory, sharper text at every zoom; PDF.js stays
+  as the cross-platform fallback.
+- 🖍 **Annotations**: select text → pick from a 7-color palette →
+  optional note → Highlight. Stored as
+  `~/.alphaxiv++/papers/<id>/annotations.json`, repainted via real
+  `PDFAnnotation`s on next open. Click any existing highlight to
+  load it back into the ribbon for edit / delete; ⌘↵ saves.
+- 🎈 **Hover marginalia bubble**: hover a highlight → small bubble
+  pops out at the right edge of the PDF column with page + selected
+  text preview + note.
+- 💡 **Ask AI button**: writes the highlight + note to
+  `current_selection.md` so the next Claude prompt has full context.
+- 🧰 Fixes: native PDFView no longer covers the React header
+  (`contentLayoutRect` Y flip); NSString conversion panic in objc2 0.6;
+  re-open after "back to library" silently focused stale library
+  windows.
 
 ---
 
@@ -167,9 +243,9 @@ Launch the app → click ⚙ at top-right →
 ## Verify download
 
 ```bash
-shasum -a 256 Marginalia_0.3.0_universal.dmg
+shasum -a 256 Marginalia_0.5.0_universal.dmg
 # expected:
-# 609098343cae29470a8c665b498fa522c799c2219e0fde03dc585f437a04b6a4
+# 8b8b440888c07c8a30ff28b4cbe1535536a4984efe0d989593e4ebd8f468751a
 ```
 
 ---
