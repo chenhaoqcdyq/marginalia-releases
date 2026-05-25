@@ -1,9 +1,50 @@
 # Marginalia
 
-> 把论文放左边，把 Claude Code 放右边。
-> 让阅读和推理变成一个流畅的回路。
+> **读论文，让 Claude 当你的研究助理 —— 帮你读，也帮你管。**
 
-[**⬇ 下载 v0.5.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
+Marginalia 把 Claude Code 嵌进 macOS 阅读器里，它同时扮演两个角色：
+
+- 📖 **阅读伙伴** — Claude 默认就知道你在读哪篇论文、刚刚划选的段落、画过的高亮、过往的对话。
+  直接问「这段公式怎么理解」「§3 总结一下」「这个 claim 之前有人做过吗」——
+  **零复制粘贴、零上下文重述**。
+- 📚 **文献库管家** — 一个 `Ask Claude` 标签页让 Claude 看到**整个文献库**。
+  问「我之前哪篇论文用过 contrastive loss？」「对比这三篇 diffusion 方法的区别」
+  「找出所有讨论 MoE 的论文」—— Claude 用自带的 `Read` / `Glob` / `Grep` 在
+  你的本地文献库 + MinerU 解析出的全文里搜，无需 MCP server、无需自定义工具。
+- 🖍 **批注本地化** — 7 色高亮 + 行内备注、每篇论文独立 Claude 会话历史、
+  一键 zip 备份。**文件全在本地磁盘**，不上云、不锁定。
+
+[**⬇ 下载 v0.6.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [English README](README_EN.md)
+
+---
+
+## 🆕 News — v0.6.0（2026-05-24）
+
+新增**文献库级 Claude 聊天**+ 论文范围选择器 + 浏览器式聊天标签页 + 弹出聊天窗口。
+现在可以同时跑多个 Claude 会话在不同 scope 上 —— 一个聊单篇论文细节，一个聊
+整个 V2A 文件夹的综述，互不打扰。
+[完整 release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.6.0)
+
+- 💬 **Ask Claude 标签**：文献库新增第四个顶级 tab，直接和 Claude 聊**整个库**
+  而不是单篇论文。后台合成一个 `library-index` 工作目录（`INDEX.md` + 每篇
+  `meta.json` + MinerU markdown 软链），Claude 自带的 `Read` / `Glob` / `Grep`
+  就能用 —— 不需要任何 MCP server。
+- 🎯 **Scope 选择器**：聊天 header 上的红色 pill `📚 N papers ▾` 打开 popover，
+  三种预设：
+  - **自定义选择**（默认）：选文件夹 + 单篇，可搜索；popover 底边可拖拽调高。
+  - **整个文献库**：v0.5.x 旧行为。
+  - **最近 N 篇**：默认 20 篇最近打开。
+  只 materialize 选中的子集到工作目录。`INDEX.md` 自带 `_Scope:_` 行让 Claude
+  自己知道当前看的是哪个子集。
+- 🗂 **浏览器式聊天标签页**：聊天 header 的 `+` 按钮像浏览器一样开一个新 tab。
+  每个 tab 有独立 session id 和持久化、后台保持运行（mounted + CSS 隐藏，流式
+  消息继续接收）、tab 标题自动用最近一句问题填充。`×` 关掉任一 tab，最后一个
+  关掉后自动新开空 tab。
+- 🪟 **弹出聊天窗口**：新增 `open_chat_window` 命令，把任意聊天独立成一个 macOS
+  窗口，可以 library chat + paper chat 同屏并排，reader 不挤。
+- 🛠 修复：library SQL `archived_at` 判断写反（把"临时预览"当成已入库），
+  现在 library chat 终于看得到真实的文件夹分组；聊天滚动两个父容器漏了
+  `min-h-0` 导致 composer 跑出去，已修。
 
 ---
 
@@ -214,8 +255,8 @@ xattr -dr com.apple.quarantine /Applications/Marginalia.app
 ## 校验下载
 
 ```bash
-shasum -a 256 Marginalia_0.5.0_universal.dmg
-# 期望值：8b8b440888c07c8a30ff28b4cbe1535536a4984efe0d989593e4ebd8f468751a
+shasum -a 256 Marginalia_0.6.0_universal.dmg
+# 期望值：00bbbd02570971f1886bb140a5cddcfbaf0e52655f8fcaae8bc9a1619b204c9f
 ```
 
 ---

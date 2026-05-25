@@ -1,9 +1,63 @@
 # Marginalia
 
-> Read papers on the left, run Claude Code on the right.
-> Turn reading and reasoning into one fluid loop.
+> **Read papers with an AI research assistant who actually remembers what you've read.**
 
-[**⬇ Download v0.5.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [中文 README](README.md)
+Marginalia embeds Claude Code into a macOS PDF reader where it plays two
+roles at the same time:
+
+- 📖 **Reading partner** — Claude knows which paper you're on, what you just
+  selected, every highlight you've made, and every prior chat about it.
+  Ask "explain this notation", "summarize §3", "is this claim novel?" —
+  **zero copy-paste, zero context-reset**.
+- 📚 **Library librarian** — an `Ask Claude` tab lets Claude see your **whole
+  library**. Ask "which paper used contrastive loss?", "compare these three
+  diffusion methods", "find me everything about MoE" — Claude's built-in
+  `Read` / `Glob` / `Grep` search across your library + MinerU-parsed full
+  text. No MCP server, no custom tools.
+- 🖍 **Notes stay local** — 7-color highlights with inline notes, per-paper
+  Claude session history, one-click zip backup. **Everything lives on your
+  disk**, not a cloud silo.
+
+[**⬇ Download v0.6.0**](https://github.com/chenhaoqcdyq/marginalia-releases/releases/latest) ·  macOS · Apple Silicon + Intel · [中文 README](README.md)
+
+---
+
+## 🆕 News — v0.6.0 (2026-05-24)
+
+**Library-level Claude chat** + a paper-scope picker + browser-style chat
+tabs + pop-out chat windows. Run several Claude sessions in parallel
+against different scopes — one chatting about a specific paper, another
+about your whole V2A folder, no crowding.
+[Full release notes →](https://github.com/chenhaoqcdyq/marginalia-releases/releases/tag/v0.6.0)
+
+- 💬 **Ask Claude tab** in the main library — a fourth top-level tab that
+  drops you straight into a Claude conversation about your **whole library**.
+  A synthetic workdir `~/.alphaxiv++/papers/library-index/` is materialized
+  with `INDEX.md` + per-paper `meta.json` + symlinks to MinerU markdown, so
+  Claude's built-in `Read` / `Glob` / `Grep` "just work" on the library —
+  no MCP server, no custom tools.
+- 🎯 **Scope picker** — the rose pill in the chat header (`📚 N papers ▾`)
+  opens a popover with three presets:
+  - **Custom selection** (default): pick folders + individual papers with
+    a searchable list. Drag the popover's bottom edge to resize.
+  - **Entire library**: preserves v0.5.x behaviour.
+  - **Recently opened N**: most recently opened N papers (default 20).
+  Only the chosen subset is materialized. Selection persists across
+  reloads; `INDEX.md` gets a `_Scope:_` line so Claude knows which subset
+  it sees.
+- 🗂 **Browser-style chat tabs**: `+` in the chat header opens a fresh tab
+  alongside the current one. Each tab has its own session id and
+  `localStorage` namespace, survives reloads, keeps running in the
+  background when not active (mounted + hidden via CSS so streams
+  continue), and is labelled with a truncated preview of its most recent
+  question. Close any with `×`; closing the last auto-creates a fresh tab.
+- 🪟 **Pop-out chat windows** — new `open_chat_window` Rust command spawns
+  an independent macOS window for any chat (label `chat-…`) so you can run
+  library + paper chats side-by-side without crowding the reader.
+- 🛠 Fixes: library SQL `archived_at` predicate was inverted (selecting
+  tentative previews instead of the real library), so library chat now sees
+  the actual folder groupings; chat scroll bug (two parent containers were
+  missing `min-h-0`) was unbounding the messages area.
 
 ---
 
@@ -243,9 +297,9 @@ Launch the app → click ⚙ at top-right →
 ## Verify download
 
 ```bash
-shasum -a 256 Marginalia_0.5.0_universal.dmg
+shasum -a 256 Marginalia_0.6.0_universal.dmg
 # expected:
-# 8b8b440888c07c8a30ff28b4cbe1535536a4984efe0d989593e4ebd8f468751a
+# 00bbbd02570971f1886bb140a5cddcfbaf0e52655f8fcaae8bc9a1619b204c9f
 ```
 
 ---
